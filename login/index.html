@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập & Đăng Ký - Hệ Thống Sàn TMĐT JML Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: { 50: '#EEF5FF', 100: '#D9E8FF', 500: '#0D6EFD', 600: '#0B5ED7' },
+                        danger: { 50: '#FFF0F0', 500: '#FA3434' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between font-sans text-slate-800">
+
+    <!-- TOP BAR -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="../user/index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
+                    JML
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg text-slate-900 tracking-tight">JML <span class="text-pink-500">Store</span></span>
+                    <span id="headerPortalLabel" class="block text-[11px] font-semibold text-blue-600 uppercase tracking-wider">Cổng Đăng Nhập & Đăng Ký Toàn Sàn</span>
+                </div>
+            </a>
+            <div class="flex items-center gap-3 text-xs font-semibold">
+                <a href="../user/index.html" class="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors flex items-center gap-1.5">
+                    <i data-lucide="shopping-bag" class="w-4 h-4 text-blue-600"></i>
+                    <span>Trang Mua Sắm</span>
+                </a>
+                <a href="../seller/index.html" class="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors flex items-center gap-1.5">
+                    <i data-lucide="store" class="w-4 h-4 text-amber-500"></i>
+                    <span>Kênh Chủ Shop</span>
+                </a>
+                <a href="../admin/index.html" class="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors flex items-center gap-1.5">
+                    <i data-lucide="shield" class="w-4 h-4 text-indigo-600"></i>
+                    <span>Quản Trị Sàn</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN AUTH CONTAINER -->
+    <main class="flex-1 flex items-center justify-center p-6">
+        <div class="w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-slate-200/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+
+            <!-- Left Column: Role Information & Branding (5 cols) -->
+            <div id="leftBrandPanel" class="lg:col-span-5 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white p-8 flex flex-col justify-between relative overflow-hidden">
+                <div class="relative z-10 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-semibold">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                        <span>Bảo mật dữ liệu trực tiếp</span>
+                    </div>
+
+                    <div>
+                        <h1 id="brandTitle" class="text-2xl font-extrabold leading-snug">Chào mừng Khách hàng đến với JML Store</h1>
+                        <p id="brandDesc" class="text-xs text-blue-100 mt-2 leading-relaxed">
+                            Mua sắm hàng chính hãng, thanh toán an toàn qua Quỹ bảo vệ người mua (Escrow) và tích lũy hạng thành viên VIP.
+                        </p>
+                    </div>
+
+                    <div id="brandFeatures" class="space-y-3 pt-2 text-xs text-blue-50">
+                        <div class="flex items-center gap-2.5">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-300 shrink-0"></i>
+                            <span>Tự động lưu hồ sơ khách hàng vào hệ thống</span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-300 shrink-0"></i>
+                            <span>Tự động điền thông tin khi đặt hàng nhanh</span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-300 shrink-0"></i>
+                            <span>Theo dõi đơn hàng & bảo vệ hoàn tiền 100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Demo Login Hint -->
+                <div id="adminDemoBox" class="hidden relative z-10 mt-8 p-4 rounded-xl bg-white/10 border border-white/20 backdrop-blur-sm text-xs space-y-2">
+                    <div class="font-bold text-amber-300 flex items-center gap-1.5">
+                        <i data-lucide="key" class="w-4 h-4"></i>
+                        <span>Tài khoản Super Admin mặc định:</span>
+                    </div>
+                    <p class="text-blue-100">Tài khoản: <strong class="text-white font-mono">admin</strong> • Mật khẩu: <strong class="text-white font-mono">123456</strong></p>
+                    <button type="button" onclick="fillAdminDemo()" class="w-full py-1.5 bg-white text-indigo-700 font-bold rounded-lg hover:bg-blue-50 transition-colors">
+                        Điền nhanh tài khoản Admin
+                    </button>
+                </div>
+
+                <div class="relative z-10 pt-6 border-t border-white/15 text-[11px] text-blue-200">
+                    © 2026 JML Store Multi-Vendor Marketplace
+                </div>
+            </div>
+
+            <!-- Right Column: Role Selector & Forms (7 cols) -->
+            <div class="lg:col-span-7 p-8 flex flex-col justify-between">
+                <div>
+                    <!-- 1. ROLE SELECTOR TABS (KHÁCH HÀNG / CHỦ SHOP / ADMIN) -->
+                    <div class="mb-6">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Chọn vai trò đăng nhập / đăng ký</label>
+                        <div class="grid grid-cols-3 gap-2 p-1 bg-slate-100 rounded-xl">
+                            <button type="button" onclick="selectRole('customer')" id="roleBtn-customer" class="role-btn py-2.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all bg-white text-blue-600 shadow-sm">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                <span>Khách Hàng</span>
+                            </button>
+                            <button type="button" onclick="selectRole('seller')" id="roleBtn-seller" class="role-btn py-2.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all text-slate-600 hover:text-slate-900">
+                                <i data-lucide="store" class="w-4 h-4"></i>
+                                <span>Chủ Shop</span>
+                            </button>
+                            <button type="button" onclick="selectRole('admin')" id="roleBtn-admin" class="role-btn py-2.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all text-slate-600 hover:text-slate-900">
+                                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                                <span>Admin Sàn</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. MODE SWITCH (ĐĂNG NHẬP / ĐĂNG KÝ MỚI) -->
+                    <div class="flex items-center border-b border-slate-200 mb-6">
+                        <button type="button" onclick="switchAuthMode('login')" id="tabModeLogin" class="pb-3 px-4 text-sm font-bold border-b-2 border-blue-600 text-blue-600 transition-all">
+                            Đăng Nhập
+                        </button>
+                        <button type="button" onclick="switchAuthMode('register')" id="tabModeRegister" class="pb-3 px-4 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all">
+                            <span id="registerTabText">Đăng Ký Tài Khoản Mới</span>
+                        </button>
+                    </div>
+
+                    <!-- Alert Message Box -->
+                    <div id="authAlert" class="hidden mb-4 p-3 rounded-lg text-xs font-medium"></div>
+
+                    <!-- =========================================================
+                         FORM 1: ĐĂNG NHẬP (LOGIN FORM)
+                         ========================================================= -->
+                    <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Tên đăng nhập / Số điện thoại / Email *</label>
+                            <div class="relative">
+                                <i data-lucide="user-check" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                                <input id="loginUsername" type="text" required placeholder="Nhập username, SĐT hoặc email..." class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Mật khẩu *</label>
+                            <div class="relative">
+                                <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                                <input id="loginPassword" type="password" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="log-in" class="w-4 h-4"></i>
+                            <span id="loginBtnLabel">Đăng Nhập Vào Trang Mua Sắm</span>
+                        </button>
+                    </form>
+
+                    <!-- =========================================================
+                         FORM 2: ĐĂNG KÝ (REGISTER FORM CHO KHÁCH HÀNG & CHỦ SHOP)
+                         ========================================================= -->
+                    <form id="registerForm" onsubmit="handleRegisterSubmit(event)" class="hidden space-y-3.5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Tên đăng nhập (Username) *</label>
+                                <input id="regUsername" type="text" required placeholder="VD: nguyenvana" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Mật khẩu *</label>
+                                <input id="regPassword" type="password" required placeholder="Nhập mật khẩu..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            <div>
+                                <label id="regNameLabel" class="block text-xs font-semibold text-slate-700 mb-1">Họ và tên Khách hàng *</label>
+                                <input id="regFullName" type="text" required placeholder="VD: Nguyễn Văn A" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Số điện thoại *</label>
+                                <input id="regPhone" type="tel" required placeholder="VD: 0909123456" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+
+                        <!-- Extra fields only for SELLER (Chủ Shop) -->
+                        <div id="sellerExtraFields" class="hidden p-3.5 rounded-xl bg-amber-50/70 border border-amber-200 space-y-3">
+                            <div class="text-xs font-bold text-amber-800 flex items-center gap-1.5">
+                                <i data-lucide="store" class="w-4 h-4 text-amber-600"></i>
+                                <span>Thông Tin Mở Cửa Hàng (Shop) Trên Sàn</span>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Tên Cửa Hàng (Shop Name) *</label>
+                                    <input id="regShopName" type="text" placeholder="VD: Samsung Official VN" class="w-full bg-white border border-amber-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Loại hình Gian hàng</label>
+                                    <select id="regShopBadge" class="w-full bg-white border border-amber-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                        <option value="JML MALL">JML Mall (Gian hàng Chính hãng)</option>
+                                        <option value="YÊU THÍCH+">Shop Yêu Thích+ (Uy tín)</option>
+                                        <option value="TIÊU CHUẨN">Shop Tiêu Chuẩn (Cá nhân)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Email liên hệ</label>
+                                <input id="regEmail" type="email" placeholder="VD: contact@gmail.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label id="regAddressLabel" class="block text-xs font-semibold text-slate-700 mb-1">Địa chỉ nhận hàng / Kho *</label>
+                                <input id="regAddress" type="text" required placeholder="VD: Quận 1, TP. Hồ Chí Minh" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="regSubmitBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="user-plus" class="w-4 h-4"></i>
+                            <span id="regBtnLabel">Hoàn Tất Đăng Ký & Vào Sàn Ngay</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Footer helper -->
+                <div class="pt-6 border-t border-slate-100 mt-6 flex items-center justify-between text-xs text-slate-500">
+                    <span id="switchModeFooterText">Chưa có tài khoản trên sàn?</span>
+                    <button type="button" onclick="toggleModeLink()" id="switchModeFooterBtn" class="font-bold text-blue-600 hover:underline">
+                        Đăng ký ngay &rarr;
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const API_BASE_URL = 'http://127.0.0.1:8000';
+        let currentRole = 'customer';
+        let currentMode = 'login';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+
+            const params = new URLSearchParams(window.location.search);
+            const roleParam = params.get('role');
+            const modeParam = params.get('mode');
+
+            if (roleParam && ['customer', 'seller', 'admin'].includes(roleParam)) {
+                selectRole(roleParam);
+            }
+            if (modeParam && ['login', 'register'].includes(modeParam)) {
+                switchAuthMode(modeParam);
+            }
+        });
+
+        function selectRole(role) {
+            currentRole = role;
+            const roles = ['customer', 'seller', 'admin'];
+            roles.forEach(r => {
+                const btn = document.getElementById(`roleBtn-${r}`);
+                if (r === role) {
+                    btn.className = 'role-btn py-2.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all bg-white text-blue-600 shadow-sm';
+                } else {
+                    btn.className = 'role-btn py-2.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all text-slate-600 hover:text-slate-900';
+                }
+            });
+
+            const leftPanel = document.getElementById('leftBrandPanel');
+            const brandTitle = document.getElementById('brandTitle');
+            const brandDesc = document.getElementById('brandDesc');
+            const adminDemoBox = document.getElementById('adminDemoBox');
+            const sellerExtra = document.getElementById('sellerExtraFields');
+            const regShopName = document.getElementById('regShopName');
+            const registerTabText = document.getElementById('registerTabText');
+            const loginBtnLabel = document.getElementById('loginBtnLabel');
+            const regBtnLabel = document.getElementById('regBtnLabel');
+            const regNameLabel = document.getElementById('regNameLabel');
+            const regAddressLabel = document.getElementById('regAddressLabel');
+
+            hideAlert();
+
+            if (role === 'customer') {
+                leftPanel.className = 'lg:col-span-5 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white p-8 flex flex-col justify-between relative overflow-hidden';
+                brandTitle.textContent = 'Chào mừng Khách hàng đến với JML Store';
+                brandDesc.textContent = 'Mua sắm hàng chính hãng, thanh toán an toàn qua Quỹ bảo vệ người mua (Escrow) và tích lũy hạng thành viên VIP.';
+                adminDemoBox.classList.add('hidden');
+                sellerExtra.classList.add('hidden');
+                regShopName.required = false;
+                registerTabText.textContent = 'Đăng Ký Khách Hàng';
+                loginBtnLabel.textContent = 'Đăng Nhập Mua Sắm Ngay';
+                regBtnLabel.textContent = 'Đăng Ký Khách Hàng & Mua Sắm';
+                regNameLabel.textContent = 'Họ và tên Khách hàng *';
+                regAddressLabel.textContent = 'Địa chỉ nhận hàng mặc định *';
+            } else if (role === 'seller') {
+                leftPanel.className = 'lg:col-span-5 bg-gradient-to-br from-amber-500 via-orange-600 to-red-600 text-white p-8 flex flex-col justify-between relative overflow-hidden';
+                brandTitle.textContent = 'Kênh Người Bán & Chủ Cửa Hàng (Seller Center)';
+                brandDesc.textContent = 'Đăng tải sản phẩm lên kệ Sàn JML Store, quản lý kho hàng, xử lý đơn hàng của khách và rút doanh thu về ngân hàng.';
+                adminDemoBox.classList.add('hidden');
+                sellerExtra.classList.remove('hidden');
+                regShopName.required = true;
+                registerTabText.textContent = 'Đăng Ký Mở Shop Mới';
+                loginBtnLabel.textContent = 'Đăng Nhập Vào Kênh Chủ Shop';
+                regBtnLabel.textContent = 'Mở Cửa Hàng (Shop) & Vào Quản Lý';
+                regNameLabel.textContent = 'Họ tên Chủ Shop *';
+                regAddressLabel.textContent = 'Địa chỉ Kho lấy hàng *';
+            } else if (role === 'admin') {
+                leftPanel.className = 'lg:col-span-5 bg-gradient-to-br from-slate-800 via-indigo-950 to-slate-900 text-white p-8 flex flex-col justify-between relative overflow-hidden';
+                brandTitle.textContent = 'Trung Tâm Điều Hành Sàn (Super Admin)';
+                brandDesc.textContent = 'Giám sát dòng tiền GMV toàn sàn, hoa hồng 7%, quản lý tất cả Cửa hàng (Shops), sản phẩm và tài khoản khách hàng.';
+                adminDemoBox.classList.remove('hidden');
+                sellerExtra.classList.add('hidden');
+                regShopName.required = false;
+                registerTabText.textContent = 'Tạo Tài Khoản Admin';
+                loginBtnLabel.textContent = 'Đăng Nhập Quản Trị Sàn (Admin)';
+                regBtnLabel.textContent = 'Tạo Tài Khoản Admin Mới';
+                regNameLabel.textContent = 'Họ tên Quản trị viên *';
+                regAddressLabel.textContent = 'Phòng ban / Đơn vị *';
+            }
+        }
+
+        function switchAuthMode(mode) {
+            currentMode = mode;
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabLogin = document.getElementById('tabModeLogin');
+            const tabReg = document.getElementById('tabModeRegister');
+            const footerText = document.getElementById('switchModeFooterText');
+            const footerBtn = document.getElementById('switchModeFooterBtn');
+
+            hideAlert();
+
+            if (mode === 'login') {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                tabLogin.className = 'pb-3 px-4 text-sm font-bold border-b-2 border-blue-600 text-blue-600 transition-all';
+                tabReg.className = 'pb-3 px-4 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all';
+                footerText.textContent = 'Chưa có tài khoản trên sàn?';
+                footerBtn.textContent = 'Đăng ký ngay →';
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                tabReg.className = 'pb-3 px-4 text-sm font-bold border-b-2 border-blue-600 text-blue-600 transition-all';
+                tabLogin.className = 'pb-3 px-4 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-all';
+                footerText.textContent = 'Đã có tài khoản?';
+                footerBtn.textContent = 'Đăng nhập ngay →';
+            }
+        }
+
+        function toggleModeLink() {
+            switchAuthMode(currentMode === 'login' ? 'register' : 'login');
+        }
+
+        function fillAdminDemo() {
+            switchAuthMode('login');
+            document.getElementById('loginUsername').value = 'admin';
+            document.getElementById('loginPassword').value = '123456';
+        }
+
+        function showAlert(msg, isError = true) {
+            const el = document.getElementById('authAlert');
+            el.classList.remove('hidden');
+            if (isError) {
+                el.className = 'mb-4 p-3 rounded-xl text-xs font-semibold bg-red-50 text-red-600 border border-red-200';
+            } else {
+                el.className = 'mb-4 p-3 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
+            }
+            el.textContent = msg;
+        }
+
+        function hideAlert() {
+            const el = document.getElementById('authAlert');
+            if (el) el.classList.add('hidden');
+        }
+
+        function saveUserSessionAndRedirect(user) {
+            localStorage.setItem('JML_AUTH_USER', JSON.stringify(user));
+            if (user.role === 'customer') {
+                localStorage.setItem('JML_CUSTOMER_USER', JSON.stringify(user));
+                window.location.href = '../user/index.html';
+            } else if (user.role === 'seller') {
+                localStorage.setItem('JML_SELLER_USER', JSON.stringify(user));
+                window.location.href = '../seller/index.html';
+            } else if (user.role === 'admin') {
+                localStorage.setItem('JML_ADMIN_USER', JSON.stringify(user));
+                window.location.href = '../admin/index.html';
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            hideAlert();
+
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, role: currentRole })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    showAlert(data.detail || 'Đăng nhập thất bại!', true);
+                    return;
+                }
+                showAlert('✓ Đăng nhập thành công! Đang chuyển hướng...', false);
+                setTimeout(() => saveUserSessionAndRedirect(data.user), 400);
+            } catch (err) {
+                showAlert('Không thể kết nối tới máy chủ FastAPI (Port 8000)!', true);
+            }
+        }
+
+        async function handleRegisterSubmit(e) {
+            e.preventDefault();
+            hideAlert();
+
+            const payload = {
+                username: document.getElementById('regUsername').value.trim(),
+                password: document.getElementById('regPassword').value,
+                role: currentRole,
+                full_name: document.getElementById('regFullName').value.trim(),
+                phone: document.getElementById('regPhone').value.trim(),
+                email: document.getElementById('regEmail').value.trim(),
+                address: document.getElementById('regAddress').value.trim(),
+                shop_name: document.getElementById('regShopName').value.trim(),
+                shop_badge: document.getElementById('regShopBadge').value
+            };
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    showAlert(data.detail || 'Đăng ký thất bại!', true);
+                    return;
+                }
+                showAlert('🎉 Đăng ký tài khoản thành công! Đang chuyển vào hệ thống...', false);
+                window.dispatchEvent(new Event('storage'));
+                setTimeout(() => saveUserSessionAndRedirect(data.user), 500);
+            } catch (err) {
+                showAlert('Không thể kết nối tới máy chủ FastAPI (Port 8000)!', true);
+            }
+        }
+    </script>
+</body>
+</html>
+
